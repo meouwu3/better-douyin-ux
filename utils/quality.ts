@@ -55,10 +55,6 @@ function collectOptions(gear: Element): Array<{ label: string; item: HTMLElement
  */
 export function applyHighestQuality(root: ParentNode = document): boolean {
   const scope = qualityScope(root);
-  const already = scope.querySelector('.xgplayer-playclarity-setting .virtual > .item.selected');
-  const alreadyLabel = (already?.textContent ?? '').replace(/\s+/g, ' ').trim();
-  if (already && qualityScore(alreadyLabel) >= 1080) return false;
-
   const gears = scope.querySelectorAll(
     '.xgplayer-playclarity-setting .gear, .gear.isSmoothSwitchClarityLogin',
   );

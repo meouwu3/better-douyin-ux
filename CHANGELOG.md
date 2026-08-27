@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.2.1 — 2026-08-28
+
+- 画质选择不再在 1080P 提前退出；菜单里有 4K/2K 时切到实际最高档
+
 ## 0.2.0 — 2026-08-28
 
 - 屏蔽词增加「点点关注」
@@ -10,7 +14,7 @@
 - 直播设置进房应用成功后不再反复展开弹幕/礼物面板
 - 评论区按虚拟列表行高隐藏送礼/加分，关键字标记可随行回收清除，减少抽搐
 - 扩展图标改为抖音网页版 PWA 标志
-- 性能：评论只观察列表新增节点；设置开关不再全页 MutationObserver / 全 DOM 扫标签；画质已达 1080P 则跳过；路由改用 WXT locationchange
+- 性能：评论只观察列表新增节点；设置开关不再全页 MutationObserver / 全 DOM 扫标签；路由改用 WXT locationchange
 - CI：去掉 workflow 里重复的 pnpm version，改用 `package.json` 的 `packageManager`
 
 ## 0.1.0 — 2026-08-28
