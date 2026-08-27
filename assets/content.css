@@ -1,0 +1,19 @@
+[data-bdux-hide] {
+  display: none !important;
+}
+
+.webcast-chatroom___badge {
+  display: none !important;
+}
+
+.webcast-chatroom___item-wrapper > div > span:first-child:has(img) {
+  display: none !important;
+}
+
+.bdux-clarity-open .virtual,
+.bdux-clarity-open .virtual .item {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
