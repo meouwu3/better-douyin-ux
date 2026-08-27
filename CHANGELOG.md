@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- CI：去掉 workflow 里重复的 pnpm version，改用 `package.json` 的 `packageManager`
+
 ## 0.1.0 — 2026-08-28
 
 - 直播间每次进入都校验并关闭「送礼信息」「福袋口令」，开启「屏蔽礼物特效」
