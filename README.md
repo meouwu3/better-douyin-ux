@@ -11,7 +11,7 @@
 ### 直播（`live.douyin.com/*`、`www.douyin.com/**/live/*`）
 
 1. **自动关闭送礼信息、福袋口令，开启屏蔽礼物特效**  
-   悬停播放器上的弹幕 / 礼物设置，按文案找到开关并拨到目标状态。抖音会重置，因此会周期性复查。MAIN world 同时改写 `danmakuConfig` / `DanmaSetting_GiftAndPackage`，避免页面把自己的选择写回去。
+   进房时悬停一次弹幕 / 礼物设置并拨到目标状态；成功后不再反复展开面板，只在开关已挂在 DOM 里时静默复查。MAIN world 同时改写 `danmakuConfig` / `DanmaSetting_GiftAndPackage`。
 2. **评论区屏蔽送礼信息**  
    优先用结构识别：`送出了` 后紧跟礼物 `<img>` 和 `×N`  combo，以及 `.webcast-chatroom__room-message` 里的「为主播加了 n 分」。关键字只作兜底。
 3. **屏蔽关键字「伯哥」**  

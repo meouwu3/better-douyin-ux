@@ -1,9 +1,10 @@
-import { hideElement, isHidden, observeMutations } from './dom';
+import { hideElement, observeMutations } from './dom';
 import { textHasBlockedKeyword } from './keywords';
 
 export type ChatKind = 'gift-send' | 'score-boost' | 'keyword' | 'normal';
 
-const ITEM_SELECTOR = '.webcast-chatroom___item';
+export const ITEM_SELECTOR = '.webcast-chatroom___item';
+export const DONE_ATTR = 'data-bdux-done';
 
 function compactText(el: Element): string {
   return (el.textContent ?? '').replace(/\s+/g, ' ').trim();
@@ -39,52 +40,87 @@ export function classifyChatItem(item: Element): ChatKind {
   return 'normal';
 }
 
-/** Hide grade / fansclub / consume badges sitting in front of the nickname. */
-export function stripLeadingBadges(item: Element): void {
-  item.querySelectorAll('.webcast-chatroom___badge').forEach((badge) => {
-    hideElement(badge, 'badge');
-  });
-
-  const body = item.querySelector('.webcast-chatroom___item-wrapper > div');
-  if (!body) return;
-
-  for (const child of Array.from(body.children)) {
-    const text = (child.textContent ?? '').trim();
-    const looksLikeName = text.endsWith('：') || text.endsWith(':');
-    const looksLikeContent =
-      child.querySelector('.webcast-chatroom___content-with-emoji-text') !== null ||
-      text.includes('送出了') ||
-      text.includes('为主播加了');
-    if (looksLikeName || looksLikeContent) break;
-
-    const hasImg = child.querySelector('img') !== null;
-    if (hasImg || text === '') hideElement(child, 'badge');
-  }
-}
-
 export function processChatItem(item: Element): boolean {
-  stripLeadingBadges(item);
+  if (item.getAttribute(DONE_ATTR) === '1') return false;
+  item.setAttribute(DONE_ATTR, '1');
   const kind = classifyChatItem(item);
   if (kind === 'normal') return false;
-  if (!isHidden(item)) hideElement(item, kind);
+  hideElement(item, kind);
   return true;
 }
 
-/** Real entry used by the content script. Returns how many items were hidden. */
-export function applyChatFilters(root: ParentNode = document): number {
+function scan(root: ParentNode): number {
   let hidden = 0;
-  root.querySelectorAll(ITEM_SELECTOR).forEach((item) => {
+  root.querySelectorAll(`${ITEM_SELECTOR}:not([${DONE_ATTR}])`).forEach((item) => {
     if (processChatItem(item)) hidden += 1;
   });
   return hidden;
 }
 
+/** Real entry used by the content script. Returns how many items were newly hidden. */
+export function applyChatFilters(root: ParentNode = document): number {
+  if (root instanceof Element && root.matches(ITEM_SELECTOR)) {
+    return processChatItem(root) ? 1 : 0;
+  }
+  return scan(root);
+}
+
+export function applyAddedNodes(nodes: NodeList | Node[]): number {
+  let hidden = 0;
+  for (const node of nodes) {
+    if (!(node instanceof Element)) continue;
+    if (node.matches(ITEM_SELECTOR)) {
+      if (processChatItem(node)) hidden += 1;
+      continue;
+    }
+    hidden += scan(node);
+  }
+  return hidden;
+}
+
+function chatObserveTarget(root: ParentNode): Node {
+  if (root instanceof Document || root instanceof Element) {
+    return (
+      root.querySelector('.webcast-chatroom___list') ??
+      root.querySelector('.webcast-chatroom') ??
+      (root instanceof Document ? (root.body ?? root.documentElement) : root)
+    );
+  }
+  return root as Node;
+}
+
 export function startChatFilter(root: ParentNode = document): () => void {
-  applyChatFilters(root);
-  const target =
-    root instanceof Document ? (root.body ?? root.documentElement) : (root as Node);
-  const observer = observeMutations(target, () => {
-    applyChatFilters(root);
-  });
-  return () => observer.disconnect();
+  let observer: MutationObserver | null = null;
+  let stopped = false;
+
+  const bind = (target: Node) => {
+    observer?.disconnect();
+    if (target instanceof Element || target instanceof Document) applyChatFilters(target);
+    observer = observeMutations(
+      target,
+      (records) => {
+        if (stopped) return;
+        for (const record of records) {
+          applyAddedNodes(record.addedNodes);
+        }
+        if (
+          target instanceof Document ||
+          (target instanceof Element && !target.classList.contains('webcast-chatroom___list'))
+        ) {
+          const list =
+            (target instanceof Document || target instanceof Element
+              ? target.querySelector('.webcast-chatroom___list')
+              : null) ?? null;
+          if (list && list !== target) bind(list);
+        }
+      },
+      { childList: true, subtree: true },
+    );
+  };
+
+  bind(chatObserveTarget(root));
+  return () => {
+    stopped = true;
+    observer?.disconnect();
+  };
 }

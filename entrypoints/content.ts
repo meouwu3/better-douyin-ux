@@ -11,12 +11,18 @@ export default defineContentScript({
   main() {
     let stopLive: (() => void) | null = null;
     let stopVideo: (() => void) | null = null;
+    let liveHref: string | null = null;
 
     const boot = () => {
       const href = location.href;
       if (isLiveUrl(href)) {
         stopVideo?.();
         stopVideo = null;
+        if (liveHref !== href) {
+          stopLive?.();
+          stopLive = null;
+          liveHref = href;
+        }
         if (!stopLive) {
           const stopSettings = startLiveSettings();
           const stopChat = startChatFilter();
@@ -27,6 +33,7 @@ export default defineContentScript({
         }
         return;
       }
+      liveHref = null;
       stopLive?.();
       stopLive = null;
       if (isVideoUrl(href)) {

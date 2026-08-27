@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- 直播设置不再每 3 秒悬停打开弹幕/礼物面板；进房应用成功后只做无展开复查
+- 评论过滤改为只处理新增节点、徽章交给 CSS，避免和 React 虚拟列表互相改 DOM 导致抽搐
 - CI：去掉 workflow 里重复的 pnpm version，改用 `package.json` 的 `packageManager`
 
 ## 0.1.0 — 2026-08-28

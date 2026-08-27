@@ -18,7 +18,7 @@ describe('ensureLiveSettings', () => {
       });
     });
 
-    const applied = await ensureLiveSettings(root);
+    const { clicked: applied } = await ensureLiveSettings(root);
     expect(applied.sort()).toEqual(['屏蔽礼物特效', '福袋口令', '送礼信息'].sort());
     expect(clicked.sort()).toEqual(['屏蔽礼物特效', '福袋口令', '送礼信息'].sort());
   });
@@ -42,7 +42,24 @@ describe('ensureLiveSettings', () => {
     root.addEventListener('click', () => {
       clicks += 1;
     });
-    expect(await ensureLiveSettings(root)).toEqual([]);
+    expect(await ensureLiveSettings(root)).toEqual({
+      clicked: [],
+      confirmed: ['送礼信息', '福袋口令', '屏蔽礼物特效'],
+    });
     expect(clicks).toBe(0);
+  });
+
+  it('does not hover-open panels when allowHover is false and switches are absent', async () => {
+    document.body.innerHTML = '<div data-e2e="danmaku-setting-icon"></div><div data-e2e="gift-setting"></div>';
+    const icon = document.querySelector('[data-e2e="danmaku-setting-icon"]');
+    let hovered = 0;
+    icon?.addEventListener('mouseenter', () => {
+      hovered += 1;
+    });
+    expect(await ensureLiveSettings(document, { allowHover: false })).toEqual({
+      clicked: [],
+      confirmed: [],
+    });
+    expect(hovered).toBe(0);
   });
 });

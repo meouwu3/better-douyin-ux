@@ -7,10 +7,8 @@ export function sleep(ms: number): Promise<void> {
 }
 
 export function hideElement(el: Element, reason: string): void {
+  if (el.getAttribute(HIDE_ATTR) === reason) return;
   el.setAttribute(HIDE_ATTR, reason);
-  if (el instanceof HTMLElement) {
-    el.style.setProperty('display', 'none', 'important');
-  }
 }
 
 export function isHidden(el: Element): boolean {
@@ -36,11 +34,11 @@ export function clickElement(el: Element): void {
 
 export function observeMutations(
   root: Node,
-  callback: () => void,
+  callback: (records: MutationRecord[]) => void,
   options?: MutationObserverInit,
 ): MutationObserver {
-  const observer = new MutationObserver(() => {
-    callback();
+  const observer = new MutationObserver((records) => {
+    callback(records);
   });
   observer.observe(root, options ?? { childList: true, subtree: true });
   return observer;

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { applyChatFilters, classifyChatItem } from '../utils/chat';
+import { applyAddedNodes, applyChatFilters, classifyChatItem } from '../utils/chat';
 import { HIDE_ATTR } from '../utils/dom';
 import {
   GIFT_SEND_HTML,
@@ -38,7 +38,7 @@ describe('classifyChatItem', () => {
 });
 
 describe('applyChatFilters', () => {
-  it('hides gift / score / keyword rows and strips leading badges on a mixed list', () => {
+  it('hides gift / score / keyword rows once and leaves nickname badges to CSS', () => {
     const list = document.createElement('div');
     list.innerHTML =
       GIFT_SEND_HTML +
@@ -49,8 +49,8 @@ describe('applyChatFilters', () => {
       TYPED_SONGCHU_HTML;
     document.body.append(list);
 
-    const hidden = applyChatFilters(list);
-    expect(hidden).toBe(3);
+    expect(applyChatFilters(list)).toBe(3);
+    expect(applyChatFilters(list)).toBe(0);
 
     const items = [...list.querySelectorAll('.webcast-chatroom___item')];
     expect(items[0]?.getAttribute(HIDE_ATTR)).toBe('gift-send');
@@ -62,11 +62,26 @@ describe('applyChatFilters', () => {
 
     const normal = items[2];
     const badgeWrap = normal?.querySelector('.webcast-chatroom___item-wrapper > div > span:first-child');
-    expect(badgeWrap?.getAttribute(HIDE_ATTR)).toBe('badge');
-    expect((badgeWrap as HTMLElement | null)?.style.display).toBe('none');
+    expect(badgeWrap?.hasAttribute(HIDE_ATTR)).toBe(false);
     expect(normal?.querySelector('.v8LY0gZF')?.textContent).toContain('山坤');
     expect(normal?.querySelector('.webcast-chatroom___content-with-emoji-text')?.textContent).toBe(
       '大结局啊哈哈哈哈',
     );
+  });
+
+  it('only processes added chat nodes instead of rescanning the whole list', () => {
+    const list = document.createElement('div');
+    list.innerHTML = NORMAL_COMMENT_HTML;
+    document.body.append(list);
+    expect(applyChatFilters(list)).toBe(0);
+
+    const gift = document.createElement('div');
+    gift.innerHTML = GIFT_SEND_HTML.trim();
+    const node = gift.firstElementChild;
+    expect(node).toBeTruthy();
+    list.append(node!);
+    expect(applyAddedNodes([node!])).toBe(1);
+    expect(node?.getAttribute(HIDE_ATTR)).toBe('gift-send');
+    expect(applyAddedNodes([node!])).toBe(0);
   });
 });

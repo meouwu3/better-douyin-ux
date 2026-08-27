@@ -10,6 +10,12 @@
   display: none !important;
 }
 
+html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
+html[data-bdux-applying] [data-e2e='gift-setting'] + div {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .bdux-clarity-open .virtual,
 .bdux-clarity-open .virtual .item {
   display: block !important;
