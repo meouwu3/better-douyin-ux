@@ -3,12 +3,11 @@ import { startChatFilter } from '../utils/chat';
 import { startLiveSettings } from '../utils/live-settings';
 import { startQualityWatcher } from '../utils/quality';
 import { isLiveUrl, isVideoUrl } from '../utils/routes';
-import { watchUrl } from '../utils/dom';
 
 export default defineContentScript({
   matches: ['*://*.douyin.com/*'],
   runAt: 'document_idle',
-  main() {
+  main(ctx) {
     let stopLive: (() => void) | null = null;
     let stopVideo: (() => void) | null = null;
     let liveHref: string | null = null;
@@ -45,6 +44,6 @@ export default defineContentScript({
     };
 
     boot();
-    watchUrl(() => boot());
+    ctx.addEventListener(window, 'wxt:locationchange', () => boot());
   },
 });

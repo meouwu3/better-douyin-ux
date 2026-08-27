@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- 性能：评论只观察列表新增节点；设置开关不再全页 MutationObserver / 全 DOM 扫标签；画质已达 1080P 则跳过；路由改用 WXT locationchange
 - 隐藏播放器上的「更多直播」入口
 - 扩展图标改为抖音网页版 PWA 标志
 - 评论区不再对虚拟列表行 `display:none` / 打永久标记；送礼和加分改 CSS 按当前内容隐藏并保留行高，避免抽搐

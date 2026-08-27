@@ -26,25 +26,7 @@ export function observeMutations(
   callback: (records: MutationRecord[]) => void,
   options?: MutationObserverInit,
 ): MutationObserver {
-  const observer = new MutationObserver((records) => {
-    callback(records);
-  });
+  const observer = new MutationObserver(callback);
   observer.observe(root, options ?? { childList: true, subtree: true });
   return observer;
-}
-
-export function watchUrl(onChange: (url: string) => void, intervalMs = 800): () => void {
-  let last = location.href;
-  const tick = () => {
-    if (location.href !== last) {
-      last = location.href;
-      onChange(last);
-    }
-  };
-  const id = window.setInterval(tick, intervalMs);
-  window.addEventListener('popstate', tick);
-  return () => {
-    window.clearInterval(id);
-    window.removeEventListener('popstate', tick);
-  };
 }

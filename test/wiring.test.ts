@@ -7,6 +7,7 @@ describe('extension wiring', () => {
     expect(source).toContain('startLiveSettings');
     expect(source).toContain('startChatFilter');
     expect(source).toContain('startQualityWatcher');
+    expect(source).toContain('wxt:locationchange');
   });
 
   it('MAIN-world inject patches storage and canvas danmaku at document_start', () => {

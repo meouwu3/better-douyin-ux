@@ -56,15 +56,11 @@ async function closeTrigger(trigger: Element | null): Promise<void> {
   await sleep(120);
 }
 
-export function toggleMatches(el: HTMLElement, wantOn: boolean): boolean {
-  return isSwitchOn(el) === wantOn;
-}
-
 export function confirmedToggleLabels(root: ParentNode): string[] {
   const labels: string[] = [];
   for (const spec of TOGGLES) {
     const sw = findLabeledSwitch(root, spec.label);
-    if (sw && toggleMatches(sw, spec.wantOn)) labels.push(spec.label);
+    if (sw && isSwitchOn(sw) === spec.wantOn) labels.push(spec.label);
   }
   return labels;
 }
@@ -141,52 +137,31 @@ export function startLiveSettings(): () => void {
     if (stopped || inflight) return;
     inflight = true;
     try {
+      const { clicked, confirmed } = await ensureLiveSettings(document, {
+        allowHover: !settled,
+      });
       if (settled) {
-        await ensureLiveSettings(document, { allowHover: false });
         schedule(RECHECK_MS);
         return;
       }
-
-      const { clicked, confirmed } = await ensureLiveSettings(document, { allowHover: true });
       const seen = new Set([...confirmed, ...clicked]);
-      if (seen.size === TOGGLES.length) {
+      if (seen.size === TOGGLES.length || hoverRounds + 1 >= MAX_HOVER_ROUNDS) {
         settled = true;
         hoverRounds = 0;
         schedule(RECHECK_MS);
         return;
       }
-
       hoverRounds += 1;
-      if (hoverRounds >= MAX_HOVER_ROUNDS) {
-        settled = true;
-        schedule(RECHECK_MS);
-        return;
-      }
-      const delay = RETRY_MS[Math.min(hoverRounds, RETRY_MS.length - 1)] ?? 8000;
-      schedule(delay);
+      schedule(RETRY_MS[Math.min(hoverRounds, RETRY_MS.length - 1)] ?? 8000);
     } finally {
       inflight = false;
     }
   };
 
   void tick();
-
-  let debounce: number | null = null;
-  const observer = new MutationObserver(() => {
-    if (stopped || settled) return;
-    if (debounce != null) return;
-    debounce = window.setTimeout(() => {
-      debounce = null;
-      if (!settled) void tick();
-    }, 800);
-  });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-
   return () => {
     stopped = true;
     clearTimer();
-    if (debounce != null) window.clearTimeout(debounce);
-    observer.disconnect();
     setApplying(false);
   };
 }

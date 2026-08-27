@@ -39,9 +39,8 @@ function qualityScope(root: ParentNode): ParentNode {
 }
 
 function collectOptions(gear: Element): Array<{ label: string; item: HTMLElement }> {
-  const items = gear.querySelectorAll(':scope > .virtual > .item, :scope .virtual > .item');
   const options: Array<{ label: string; item: HTMLElement }> = [];
-  for (const item of items) {
+  for (const item of gear.querySelectorAll('.virtual > .item')) {
     if (!(item instanceof HTMLElement)) continue;
     const label = (item.textContent ?? '').replace(/\s+/g, ' ').trim();
     if (!label) continue;
@@ -56,6 +55,10 @@ function collectOptions(gear: Element): Array<{ label: string; item: HTMLElement
  */
 export function applyHighestQuality(root: ParentNode = document): boolean {
   const scope = qualityScope(root);
+  const already = scope.querySelector('.xgplayer-playclarity-setting .virtual > .item.selected');
+  const alreadyLabel = (already?.textContent ?? '').replace(/\s+/g, ' ').trim();
+  if (already && qualityScore(alreadyLabel) >= 1080) return false;
+
   const gears = scope.querySelectorAll(
     '.xgplayer-playclarity-setting .gear, .gear.isSmoothSwitchClarityLogin',
   );
@@ -91,7 +94,7 @@ export function startQualityWatcher(root: ParentNode = document): () => void {
     applyHighestQuality(root);
   };
   tick();
-  const id = window.setInterval(tick, 1200);
+  const id = window.setInterval(tick, 2500);
   return () => {
     window.clearInterval(id);
   };

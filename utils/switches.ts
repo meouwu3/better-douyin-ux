@@ -1,24 +1,6 @@
 import { clickElement } from './dom';
 
-const DOUYIN_PINK = { r: 254, g: 44, b: 85 };
-
-function parseRgb(color: string): { r: number; g: number; b: number } | null {
-  const match = color.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-  if (!match) return null;
-  return { r: Number(match[1]), g: Number(match[2]), b: Number(match[3]) };
-}
-
-/** Pink track / extra inner class / 3-class outer node = ON. */
-export function isSwitchOn(el: HTMLElement): boolean {
-  if (typeof getComputedStyle === 'function') {
-    const rgb = parseRgb(getComputedStyle(el).backgroundColor);
-    if (rgb && rgb.r > 200 && rgb.g < 90 && rgb.b > 40) return true;
-    if (rgb && Math.abs(rgb.r - DOUYIN_PINK.r) < 8 && Math.abs(rgb.g - DOUYIN_PINK.g) < 8) {
-      return true;
-    }
-  }
-  return isSwitchOnByStructure(el);
-}
+const TRIGGER_SEL = '[data-e2e="danmaku-setting-icon"], [data-e2e="gift-setting"]';
 
 export function isSwitchOnByStructure(el: Element): boolean {
   const inner = el.firstElementChild;
@@ -27,9 +9,31 @@ export function isSwitchOnByStructure(el: Element): boolean {
   return false;
 }
 
-export function findLabeledSwitch(root: ParentNode, label: string): HTMLElement | null {
-  const candidates = root.querySelectorAll('span, div');
-  for (const node of candidates) {
+export function isSwitchOn(el: HTMLElement): boolean {
+  return isSwitchOnByStructure(el);
+}
+
+function collectSearchRoots(root: ParentNode): ParentNode[] {
+  const roots: ParentNode[] = [];
+  const seen = new Set<ParentNode>();
+  const add = (node: ParentNode | null | undefined) => {
+    if (!node || seen.has(node)) return;
+    seen.add(node);
+    roots.push(node);
+  };
+
+  if (root instanceof Document || root instanceof Element) {
+    root.querySelectorAll(TRIGGER_SEL).forEach((trigger) => {
+      add(trigger.nextElementSibling);
+      add(trigger.parentElement);
+    });
+  }
+  if (roots.length === 0) add(root);
+  return roots;
+}
+
+function findLabeledSwitchIn(scope: ParentNode, label: string): HTMLElement | null {
+  for (const node of scope.querySelectorAll('span')) {
     if ((node.textContent ?? '').trim() !== label) continue;
     const hasDirectText = [...node.childNodes].some(
       (child) => child.nodeType === Node.TEXT_NODE && child.textContent?.trim() === label,
@@ -49,6 +53,14 @@ export function findLabeledSwitch(root: ParentNode, label: string): HTMLElement 
       return knob instanceof HTMLElement && knob.childElementCount === 0;
     });
     if (switchEl instanceof HTMLElement) return switchEl;
+  }
+  return null;
+}
+
+export function findLabeledSwitch(root: ParentNode, label: string): HTMLElement | null {
+  for (const scope of collectSearchRoots(root)) {
+    const found = findLabeledSwitchIn(scope, label);
+    if (found) return found;
   }
   return null;
 }

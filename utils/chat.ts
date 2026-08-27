@@ -36,7 +36,7 @@ export function isScoreBoostComment(item: Element): boolean {
 export function classifyChatItem(item: Element): ChatKind {
   if (isGiftSendComment(item)) return 'gift-send';
   if (isScoreBoostComment(item)) return 'score-boost';
-  if (textHasBlockedKeyword(compactText(item))) return 'keyword';
+  if (textHasBlockedKeyword(item.textContent ?? '')) return 'keyword';
   return 'normal';
 }
 
@@ -54,7 +54,7 @@ function isBottomTicker(item: Element): boolean {
  */
 export function processChatItem(item: Element): boolean {
   if (isBottomTicker(item)) return false;
-  const shouldHide = textHasBlockedKeyword(compactText(item));
+  const shouldHide = textHasBlockedKeyword(item.textContent ?? '');
   const hidden = item.getAttribute(HIDE_ATTR) === 'keyword';
   if (shouldHide === hidden) return false;
   if (shouldHide) {
@@ -106,21 +106,11 @@ export function applyAddedNodes(nodes: NodeList | Node[]): number {
   return hidden;
 }
 
-function chatObserveTarget(root: ParentNode): Node {
-  if (root instanceof Document || root instanceof Element) {
-    return (
-      root.querySelector('.webcast-chatroom___list') ??
-      root.querySelector('.webcast-chatroom') ??
-      (root instanceof Document ? (root.body ?? root.documentElement) : root)
-    );
-  }
-  return root as Node;
-}
-
 export function startChatFilter(root: ParentNode = document): () => void {
   let observer: MutationObserver | null = null;
   let stopped = false;
   let raf = 0;
+  let findTimer: number | null = null;
   const pending: Node[] = [];
 
   const flush = () => {
@@ -129,37 +119,55 @@ export function startChatFilter(root: ParentNode = document): () => void {
     applyAddedNodes(pending.splice(0));
   };
 
-  const bind = (target: Node) => {
+  const attach = (list: Element) => {
     observer?.disconnect();
-    if (target instanceof Element || target instanceof Document) applyChatFilters(target);
+    applyChatFilters(list);
     observer = observeMutations(
-      target,
+      list,
       (records) => {
         if (stopped) return;
         for (const record of records) {
           for (const node of record.addedNodes) pending.push(node);
-          if (record.target instanceof Node) pending.push(record.target);
         }
         if (!raf) raf = requestAnimationFrame(flush);
-        if (
-          target instanceof Document ||
-          (target instanceof Element && !target.classList.contains('webcast-chatroom___list'))
-        ) {
-          const list =
-            (target instanceof Document || target instanceof Element
-              ? target.querySelector('.webcast-chatroom___list')
-              : null) ?? null;
-          if (list && list !== target) bind(list);
-        }
       },
       { childList: true, subtree: true },
     );
   };
 
-  bind(chatObserveTarget(root));
+  const findList = (): Element | null => {
+    if (root instanceof Document || root instanceof Element) {
+      return root.querySelector('.webcast-chatroom___list');
+    }
+    return null;
+  };
+
+  const existing = findList();
+  if (existing) {
+    attach(existing);
+  } else {
+    let tries = 0;
+    findTimer = window.setInterval(() => {
+      if (stopped) return;
+      const list = findList();
+      if (list) {
+        if (findTimer != null) window.clearInterval(findTimer);
+        findTimer = null;
+        attach(list);
+        return;
+      }
+      tries += 1;
+      if (tries > 40 && findTimer != null) {
+        window.clearInterval(findTimer);
+        findTimer = null;
+      }
+    }, 500);
+  }
+
   return () => {
     stopped = true;
     if (raf) cancelAnimationFrame(raf);
+    if (findTimer != null) window.clearInterval(findTimer);
     observer?.disconnect();
   };
 }
