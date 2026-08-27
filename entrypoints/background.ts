@@ -1,3 +1,3 @@
 export default defineBackground(() => {
-  console.log('Hello background!', { id: browser.runtime.id });
+  // MV3 service worker keep-alive is not required; content scripts do the work.
 });
