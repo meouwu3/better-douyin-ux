@@ -1,0 +1,23 @@
+name: Bug
+description: 某个功能在当前抖音页面失效
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: url
+    attributes:
+      label: 页面 URL
+      placeholder: https://live.douyin.com/...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望 / 实际
+    validations:
+      required: true
+  - type: textarea
+    id: html
+    attributes:
+      label: 相关 DOM（可选）
+      description: 从开发者工具复制开关或评论节点的 outerHTML。
