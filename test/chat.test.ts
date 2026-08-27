@@ -1,6 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { applyAddedNodes, applyChatFilters, classifyChatItem } from '../utils/chat';
-import { HIDE_ATTR } from '../utils/dom';
+import {
+  applyAddedNodes,
+  applyChatFilters,
+  classifyChatItem,
+  HIDE_ATTR,
+  processChatItem,
+} from '../utils/chat';
 import {
   FOLLOW_KEYWORD_HTML,
   GIFT_SEND_HTML,
@@ -43,50 +48,60 @@ describe('classifyChatItem', () => {
 });
 
 describe('applyChatFilters', () => {
-  it('hides gift / score / keyword rows once and leaves nickname badges to CSS', () => {
+  it('only JS-marks keyword rows; gifts and score-boost stay unmarked for CSS', () => {
     const list = document.createElement('div');
+    list.className = 'webcast-chatroom___list';
     list.innerHTML =
       GIFT_SEND_HTML +
       SCORE_BOOST_HTML +
       NORMAL_COMMENT_HTML +
       KEYWORD_COMMENT_HTML +
+      FOLLOW_KEYWORD_HTML +
       LOOKALIKE_COMMENT_HTML +
       TYPED_SONGCHU_HTML;
     document.body.append(list);
 
-    expect(applyChatFilters(list)).toBe(3);
+    expect(applyChatFilters(list)).toBe(2);
     expect(applyChatFilters(list)).toBe(0);
 
     const items = [...list.querySelectorAll('.webcast-chatroom___item')];
-    expect(items[0]?.getAttribute(HIDE_ATTR)).toBe('gift-send');
-    expect(items[1]?.getAttribute(HIDE_ATTR)).toBe('score-boost');
+    expect(items[0]?.hasAttribute(HIDE_ATTR)).toBe(false);
+    expect(items[1]?.hasAttribute(HIDE_ATTR)).toBe(false);
     expect(items[2]?.hasAttribute(HIDE_ATTR)).toBe(false);
     expect(items[3]?.getAttribute(HIDE_ATTR)).toBe('keyword');
-    expect(items[4]?.hasAttribute(HIDE_ATTR)).toBe(false);
+    expect(items[4]?.getAttribute(HIDE_ATTR)).toBe('keyword');
     expect(items[5]?.hasAttribute(HIDE_ATTR)).toBe(false);
+    expect(items[6]?.hasAttribute(HIDE_ATTR)).toBe(false);
 
-    const normal = items[2];
-    const badgeWrap = normal?.querySelector('.webcast-chatroom___item-wrapper > div > span:first-child');
-    expect(badgeWrap?.hasAttribute(HIDE_ATTR)).toBe(false);
-    expect(normal?.querySelector('.v8LY0gZF')?.textContent).toContain('山坤');
-    expect(normal?.querySelector('.webcast-chatroom___content-with-emoji-text')?.textContent).toBe(
-      '大结局啊哈哈哈哈',
-    );
+    expect(items[0]?.querySelector('img[src*="~tplv-obj.png"]')).toBeTruthy();
+    expect(items[1]?.querySelector('.webcast-chatroom__room-message')).toBeTruthy();
   });
 
-  it('only processes added chat nodes instead of rescanning the whole list', () => {
+  it('clears a stale keyword marker when a virtual-list row is reused', () => {
+    const item = mount(KEYWORD_COMMENT_HTML);
+    expect(processChatItem(item)).toBe(true);
+    expect(item.getAttribute(HIDE_ATTR)).toBe('keyword');
+
+    const body = item.querySelector('.webcast-chatroom___content-with-emoji-text');
+    expect(body).toBeTruthy();
+    body!.textContent = '加油';
+    expect(processChatItem(item)).toBe(false);
+    expect(item.hasAttribute(HIDE_ATTR)).toBe(false);
+  });
+
+  it('marks a newly added keyword node and is idle on the second pass', () => {
     const list = document.createElement('div');
     list.innerHTML = NORMAL_COMMENT_HTML;
     document.body.append(list);
     expect(applyChatFilters(list)).toBe(0);
 
-    const gift = document.createElement('div');
-    gift.innerHTML = GIFT_SEND_HTML.trim();
-    const node = gift.firstElementChild;
+    const wrap = document.createElement('div');
+    wrap.innerHTML = FOLLOW_KEYWORD_HTML.trim();
+    const node = wrap.firstElementChild;
     expect(node).toBeTruthy();
     list.append(node!);
     expect(applyAddedNodes([node!])).toBe(1);
-    expect(node?.getAttribute(HIDE_ATTR)).toBe('gift-send');
+    expect(node?.getAttribute(HIDE_ATTR)).toBe('keyword');
     expect(applyAddedNodes([node!])).toBe(0);
   });
 });

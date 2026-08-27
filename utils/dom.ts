@@ -1,18 +1,7 @@
-export const HIDE_ATTR = 'data-bdux-hide';
-
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
-}
-
-export function hideElement(el: Element, reason: string): void {
-  if (el.getAttribute(HIDE_ATTR) === reason) return;
-  el.setAttribute(HIDE_ATTR, reason);
-}
-
-export function isHidden(el: Element): boolean {
-  return el.hasAttribute(HIDE_ATTR);
 }
 
 export function dispatchHover(el: Element, entering: boolean): void {

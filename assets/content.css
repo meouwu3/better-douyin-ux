@@ -1,5 +1,12 @@
-[data-bdux-hide] {
-  display: none !important;
+/*
+ * Virtual chat list measures row height. display:none collapses rows to 0 and
+ * the windowed list jumps. Keep layout, only paint-hide.
+ */
+.webcast-chatroom___list .webcast-chatroom___item:has(img[src*='~tplv-obj.png']),
+.webcast-chatroom___list .webcast-chatroom___item:has(.webcast-chatroom__room-message),
+.webcast-chatroom___item[data-bdux-hide] {
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .webcast-chatroom___badge {

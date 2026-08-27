@@ -30,7 +30,9 @@
 
 ## 评论
 
-容器：`.webcast-chatroom___item` > `.webcast-chatroom___item-wrapper`
+容器：`.webcast-chatroom___list` 是窗口虚拟列表（`data-index` + `translateY`）。行高被改成 0 会抽搐，所以送礼/加分行用 `visibility: hidden` 而不是 `display: none`。
+
+`.webcast-chatroom___item` > `.webcast-chatroom___item-wrapper`
 
 送礼：`送出了` 后跟礼物 `<img>` 和 `×N`。  
 加分：`.webcast-chatroom__room-message` 内「为主播加了 n 分」。  

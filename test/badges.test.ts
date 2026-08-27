@@ -1,6 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it } from 'vitest';
-import { BOTTOM_TICKER_HTML, GIFT_BAR_HTML, JOIN_TOAST_HTML, mount } from './fixtures';
+import {
+  BOTTOM_TICKER_HTML,
+  GIFT_BAR_HTML,
+  GIFT_SEND_HTML,
+  JOIN_TOAST_HTML,
+  SCORE_BOOST_HTML,
+  mount,
+} from './fixtures';
 
 const css = readFileSync('assets/content.css', 'utf8');
 
@@ -39,5 +46,15 @@ describe('nickname badge CSS', () => {
     expect(bar.id).toBe('BottomLayout');
     expect(bar.querySelector('[data-e2e="gifts-container"]')?.textContent).toContain('人气票');
     expect(bar.querySelector('[data-e2e="recharge-btn"]')?.textContent).toBe('充值');
+  });
+
+  it('hides gift-send and score-boost rows with content-based CSS, not JS markers', () => {
+    expect(css).toContain("img[src*='~tplv-obj.png']");
+    expect(css).toContain('.webcast-chatroom__room-message');
+    expect(css).toContain('visibility: hidden');
+    const gift = mount(GIFT_SEND_HTML);
+    const score = mount(SCORE_BOOST_HTML);
+    expect(gift.querySelector('img[src*="~tplv-obj.png"]')).toBeTruthy();
+    expect(score.querySelector('.webcast-chatroom__room-message')).toBeTruthy();
   });
 });
