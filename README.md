@@ -15,7 +15,7 @@
 2. **评论区屏蔽送礼信息**  
    优先用结构识别：`送出了` 后紧跟礼物 `<img>` 和 `×N`  combo，以及 `.webcast-chatroom__room-message` 里的「为主播加了 n 分」。关键字只作兜底。
 3. **屏蔽关键字**  
-   写死在 [`utils/keywords.ts`](utils/keywords.ts)：`伯哥`、`点点关注`。没有选项页。评论走 DOM 隐藏；弹幕是 `CanvasDanmakuPlugin`，在 MAIN world 拦截 `fillText` / `strokeText`。
+   写死在 [`utils/keywords.ts`](utils/keywords.ts)：`伯哥`、`点点关注`。没有选项页。评论走 DOM 隐藏；弹幕画在 Worker 的 OffscreenCanvas 上，拦截 Worker 的 `addBarrage` 消息，主线程 `fillText` 作为无 Worker 时的兜底。
 4. **去掉昵称前的徽章**  
    等级、消费勋章、粉丝团等名字前面的元素一律隐藏，包括「加入了直播间」进房条和输入框上方的来了 / 点赞提示。
 5. **隐藏底部礼物栏、充值和「更多直播」**  

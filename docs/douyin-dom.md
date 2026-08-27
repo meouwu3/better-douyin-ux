@@ -47,7 +47,7 @@
 
 图片 URL 片段：`new_user_grade_level`、`ranklist_fansclub`、`recent_consume_badge`、`fansclub_effect_badge`。
 
-弹幕：`.CanvasDanmakuPlugin > canvas`，不是 DOM 节点。
+弹幕：`.CanvasDanmakuPlugin > canvas`，`transferControlToOffscreen` 后在名为 `live-canvas-danmaku` 的 Worker 里绘制。主线程 `Worker.postMessage({ method: 'addBarrage', params })`，`params.content` 为 `{ type:'text', text }` / `{ type:'block', content }` 树。主世界的 `fillText` 钩不到 Worker。
 
 ## 视频画质
 

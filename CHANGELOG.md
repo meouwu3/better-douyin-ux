@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.2.2 — 2026-08-28
+
+- 弹幕关键字：拦截 CanvasDanmakuPlugin Worker 的 `addBarrage`（OffscreenCanvas 上的 fillText 在 Worker 里，主线程钩不到）
+
 ## 0.2.1 — 2026-08-28
 
 - 画质选择不再在 1080P 提前退出；菜单里有 4K/2K 时切到实际最高档
