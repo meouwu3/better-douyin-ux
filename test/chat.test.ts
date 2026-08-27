@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { applyAddedNodes, applyChatFilters, classifyChatItem } from '../utils/chat';
 import { HIDE_ATTR } from '../utils/dom';
 import {
+  FOLLOW_KEYWORD_HTML,
   GIFT_SEND_HTML,
   KEYWORD_COMMENT_HTML,
   LOOKALIKE_COMMENT_HTML,
@@ -26,6 +27,10 @@ describe('classifyChatItem', () => {
 
   it('detects hardcoded keyword 伯哥', () => {
     expect(classifyChatItem(mount(KEYWORD_COMMENT_HTML))).toBe('keyword');
+  });
+
+  it('detects hardcoded keyword 点点关注', () => {
+    expect(classifyChatItem(mount(FOLLOW_KEYWORD_HTML))).toBe('keyword');
   });
 
   it('keeps lookalike 伯格 comments', () => {

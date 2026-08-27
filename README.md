@@ -14,14 +14,16 @@
    进房时悬停一次弹幕 / 礼物设置并拨到目标状态；成功后不再反复展开面板，只在开关已挂在 DOM 里时静默复查。MAIN world 同时改写 `danmakuConfig` / `DanmaSetting_GiftAndPackage`。
 2. **评论区屏蔽送礼信息**  
    优先用结构识别：`送出了` 后紧跟礼物 `<img>` 和 `×N`  combo，以及 `.webcast-chatroom__room-message` 里的「为主播加了 n 分」。关键字只作兜底。
-3. **屏蔽关键字「伯哥」**  
-   写死在 [`utils/keywords.ts`](utils/keywords.ts)，没有选项页。评论走 DOM 隐藏；弹幕是 `CanvasDanmakuPlugin`，在 MAIN world 拦截 `fillText` / `strokeText`。
+3. **屏蔽关键字**  
+   写死在 [`utils/keywords.ts`](utils/keywords.ts)：`伯哥`、`点点关注`。没有选项页。评论走 DOM 隐藏；弹幕是 `CanvasDanmakuPlugin`，在 MAIN world 拦截 `fillText` / `strokeText`。
 4. **去掉昵称前的徽章**  
    等级、消费勋章、粉丝团等名字前面的元素一律隐藏，包括「加入了直播间」进房条和输入框上方的来了 / 点赞提示。
+5. **隐藏底部礼物栏和充值**  
+   CSS 隐藏 `#BottomLayout`（礼物滑动条、「更多」、充值）。
 
 ### 视频（非直播）
 
-5. **自动最高画质**  
+6. **自动最高画质**  
    读取 `.xgplayer-playclarity-setting` 菜单，跳过「智能 / 自动」和需要登录的档位，点击当前最高可用项。信息流切视频后会再执行一次。
 
 ## 安装

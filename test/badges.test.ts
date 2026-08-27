@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it } from 'vitest';
-import { BOTTOM_TICKER_HTML, JOIN_TOAST_HTML, mount } from './fixtures';
+import { BOTTOM_TICKER_HTML, GIFT_BAR_HTML, JOIN_TOAST_HTML, mount } from './fixtures';
 
 const css = readFileSync('assets/content.css', 'utf8');
 
@@ -29,5 +29,15 @@ describe('nickname badge CSS', () => {
     expect(toast.querySelector("img[src*='fansclub_effect_badge']")).toBeTruthy();
     expect(toast.textContent).toContain('汇乐石材');
     expect(toast.textContent).toContain('加入了直播间');
+  });
+
+  it('targets the bottom gift bar and recharge slot', () => {
+    expect(css).toContain('#BottomLayout');
+    expect(css).toContain("[data-e2e='gifts-container']");
+    expect(css).toContain("[data-e2e='recharge-btn']");
+    const bar = mount(GIFT_BAR_HTML);
+    expect(bar.id).toBe('BottomLayout');
+    expect(bar.querySelector('[data-e2e="gifts-container"]')?.textContent).toContain('人气票');
+    expect(bar.querySelector('[data-e2e="recharge-btn"]')?.textContent).toBe('充值');
   });
 });

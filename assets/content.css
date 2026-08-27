@@ -35,6 +35,13 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+#BottomLayout,
+[data-e2e='gifts-container'],
+[data-e2e='gifts-switch'],
+[data-e2e='recharge-btn'] {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;

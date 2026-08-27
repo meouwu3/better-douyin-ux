@@ -26,6 +26,8 @@
 
 礼物特效没有对应的持久化键。
 
+底部礼物栏：`#BottomLayout`，内含 `[data-e2e="gifts-container"]`、`[data-e2e="gifts-switch"]`（更多）、`[data-e2e="recharge-btn"]`（充值）。画质等播放控件不在这个节点里。
+
 ## 评论
 
 容器：`.webcast-chatroom___item` > `.webcast-chatroom___item-wrapper`

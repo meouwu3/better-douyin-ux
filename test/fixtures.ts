@@ -67,6 +67,29 @@ export const KEYWORD_COMMENT_HTML = `
 </div>
 `;
 
+export const FOLLOW_KEYWORD_HTML = `
+<div class="webcast-chatroom___item webcast-chatroom___item_new">
+  <div class="Cl4EfhXg webcast-chatroom___item-wrapper">
+    <div class="NkS2Invn">
+      <span class="v8LY0gZF">路人丙：</span>
+      <span class="cL385mHb"><span class="webcast-chatroom___content-with-emoji-text">点点关注</span></span>
+    </div>
+  </div>
+</div>
+`;
+
+export const GIFT_BAR_HTML = `
+<div id="BottomLayout">
+  <div>
+    <div class="gitBarOptimizeEnabled metro">
+      <div data-e2e="gifts-container"><div data-e2e="gift-btn">人气票</div></div>
+      <div data-e2e="gifts-switch">更多</div>
+      <div data-e2e="recharge-btn">充值</div>
+    </div>
+  </div>
+</div>
+`;
+
 export const LOOKALIKE_COMMENT_HTML = `
 <div class="webcast-chatroom___item webcast-chatroom___item_new">
   <div class="Cl4EfhXg webcast-chatroom___item-wrapper">
