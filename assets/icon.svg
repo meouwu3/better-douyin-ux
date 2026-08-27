@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Better Douyin UX">
+  <rect width="128" height="128" rx="28" fill="#12141C"/>
+  <path fill="#D6FF3F" d="M28 28l3.2 8.4 8.8 1.2-7.2 5.6 2.4 8.8L28 47.2 20.8 52l2.4-8.8-7.2-5.6 8.8-1.2z"/>
+  <path fill="#F4F0E6" d="M52 36c0-1.6 1.8-2.6 3.2-1.8l38 22c1.4.8 1.4 2.8 0 3.6l-38 22c-1.4.8-3.2-.2-3.2-1.8V36z"/>
+</svg>
