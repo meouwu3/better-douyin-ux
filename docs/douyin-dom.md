@@ -28,6 +28,8 @@
 
 底部礼物栏：`#BottomLayout`，内含 `[data-e2e="gifts-container"]`、`[data-e2e="gifts-switch"]`（更多）、`[data-e2e="recharge-btn"]`（充值）。画质等播放控件不在这个节点里。
 
+「更多直播」：`#TipsLayout` 内指向 `live.douyin.com/?enter_from_merge=...` 的链接。
+
 ## 评论
 
 容器：`.webcast-chatroom___list` 是窗口虚拟列表（`data-index` + `translateY`）。行高被改成 0 会抽搐，所以送礼/加分行用 `visibility: hidden` 而不是 `display: none`。

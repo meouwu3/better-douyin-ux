@@ -49,6 +49,11 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+#TipsLayout:has(a[href*='live.douyin.com']),
+#TipsLayout a[href*='live.douyin.com'] {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;

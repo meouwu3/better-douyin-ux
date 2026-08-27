@@ -18,8 +18,8 @@
    写死在 [`utils/keywords.ts`](utils/keywords.ts)：`伯哥`、`点点关注`。没有选项页。评论走 DOM 隐藏；弹幕是 `CanvasDanmakuPlugin`，在 MAIN world 拦截 `fillText` / `strokeText`。
 4. **去掉昵称前的徽章**  
    等级、消费勋章、粉丝团等名字前面的元素一律隐藏，包括「加入了直播间」进房条和输入框上方的来了 / 点赞提示。
-5. **隐藏底部礼物栏和充值**  
-   CSS 隐藏 `#BottomLayout`（礼物滑动条、「更多」、充值）。
+5. **隐藏底部礼物栏、充值和「更多直播」**  
+   CSS 隐藏 `#BottomLayout`（礼物滑动条、「更多」、充值）以及播放器上的「更多直播」入口。
 
 ### 视频（非直播）
 

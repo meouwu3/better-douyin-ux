@@ -5,6 +5,7 @@ import {
   GIFT_BAR_HTML,
   GIFT_SEND_HTML,
   JOIN_TOAST_HTML,
+  MORE_LIVE_HTML,
   SCORE_BOOST_HTML,
   mount,
 } from './fixtures';
@@ -46,6 +47,14 @@ describe('nickname badge CSS', () => {
     expect(bar.id).toBe('BottomLayout');
     expect(bar.querySelector('[data-e2e="gifts-container"]')?.textContent).toContain('人气票');
     expect(bar.querySelector('[data-e2e="recharge-btn"]')?.textContent).toBe('充值');
+  });
+
+  it('targets the 更多直播 overlay on the player', () => {
+    expect(css).toContain('#TipsLayout');
+    expect(css).toContain("a[href*='live.douyin.com']");
+    const tips = mount(MORE_LIVE_HTML);
+    expect(tips.id).toBe('TipsLayout');
+    expect(tips.querySelector('a[href*="live.douyin.com"]')?.textContent).toContain('更多直播');
   });
 
   it('hides gift-send and score-boost rows with content-based CSS, not JS markers', () => {

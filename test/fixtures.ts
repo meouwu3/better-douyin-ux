@@ -78,6 +78,16 @@ export const FOLLOW_KEYWORD_HTML = `
 </div>
 `;
 
+export const MORE_LIVE_HTML = `
+<div id="TipsLayout">
+  <div id="video-center"></div>
+  <div id="control-right"></div>
+  <div>
+    <a href="https://live.douyin.com/?enter_from_merge=link_share&amp;enter_method=direct_open"><span>更多直播</span></a>
+  </div>
+</div>
+`;
+
 export const GIFT_BAR_HTML = `
 <div id="BottomLayout">
   <div>
