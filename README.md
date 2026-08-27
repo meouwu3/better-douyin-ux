@@ -57,7 +57,7 @@ pnpm compile      # tsc --noEmit
 pnpm build
 ```
 
-图标源文件是 [`assets/icon.svg`](assets/icon.svg)，需要重绘 PNG 时：
+工具栏图标使用抖音网页版 PWA 标志（[`assets/icon-source.png`](assets/icon-source.png)）。重新导出各尺寸：
 
 ```bash
 python3 scripts/generate-icons.py
