@@ -33,7 +33,13 @@
 送礼：`送出了` 后跟礼物 `<img>` 和 `×N`。  
 加分：`.webcast-chatroom__room-message` 内「为主播加了 n 分」。  
 普通评论内容：`.webcast-chatroom___content-with-emoji-text`。  
-昵称前徽章：wrapper 内第一个带 `img` 的 `span`（等级 / 消费 / 粉丝团）。
+昵称前徽章：
+
+- 普通评论：`.webcast-chatroom___item-wrapper > div > span:first-child:has(img)`
+- 输入框上方粘性提示（来了 / 点赞了）：`.webcast-chatroom___bottom-message`，结构无 `item-wrapper`
+- 「加入了直播间」进房条：带 `background-image` 的容器（`new_grade_enter` / `fansclub_effect_icon`）+ 前置 `<img>`
+
+图片 URL 片段：`new_user_grade_level`、`ranklist_fansclub`、`recent_consume_badge`、`fansclub_effect_badge`。
 
 弹幕：`.CanvasDanmakuPlugin > canvas`，不是 DOM 节点。
 

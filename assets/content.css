@@ -6,7 +6,32 @@
   display: none !important;
 }
 
+/* scrolling comments */
 .webcast-chatroom___item-wrapper > div > span:first-child:has(img) {
+  display: none !important;
+}
+
+/* sticky ticker above the input (来了 / 点赞了) — no item-wrapper */
+.webcast-chatroom___bottom-message > .webcast-chatroom___item > div > span:first-child:has(img),
+.webcast-chatroom___bottom_message > div > span:first-child:has(img) {
+  display: none !important;
+}
+
+/* 加入了直播间 enter toast: grade / fansclub chip before the name */
+div[style*='new_grade_enter'] > img,
+div[style*='fansclub_effect'] > img {
+  display: none !important;
+}
+
+div[style*='new_grade_enter'],
+div[style*='fansclub_effect_icon'] {
+  background-image: none !important;
+}
+
+img[src*='new_user_grade_level'],
+img[src*='ranklist_fansclub'],
+img[src*='recent_consume_badge'],
+img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 

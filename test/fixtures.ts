@@ -89,6 +89,32 @@ export const TYPED_SONGCHU_HTML = `
 </div>
 `;
 
+/** Sticky ticker above the composer; no item-wrapper. Captured 2026-08-28. */
+export const BOTTOM_TICKER_HTML = `
+<div class="webcast-chatroom___bottom-message">
+  <div class="webcast-chatroom___item webcast-chatroom___item_new webcast-chatroom___bottom_message" data-id="1" style="background-color: transparent;">
+    <div class="NkS2Invn">
+      <span style="cursor: pointer; display: inline-block; height: 20px; vertical-align: middle;">
+        <span class="eReAkD7x">
+          <span class="uVbVarFF"><img alt="" src="https://p3-webcast.douyinpic.com/img/webcast/new_user_grade_level_v1_35.png~tplv-obj.image" height="18"></span>
+          <span class="uVbVarFF"><img alt="" src="https://p11-webcast.douyinpic.com/img/webcast/recent_consume_badge_baiyin.png~tplv-obj.image" height="18"></span>
+        </span>
+      </span>
+      <span class="v8LY0gZF">困到想睡觉：</span>
+      <span class="cL385mHb">为主播点赞了</span>
+    </div>
+  </div>
+</div>
+`;
+
+/** Enter toast in the chat header. Captured 2026-08-28. */
+export const JOIN_TOAST_HTML = `
+<div class="MKbECvut" style="background-image: url(&quot;https://p3-webcast.douyinpic.com/img/webcast/fansclub_effect_icon_11-20.png~tplv-obj.image&quot;);">
+  <img src="https://p11-webcast.douyinpic.com/img/webcast/fansclub_effect_badge_12.png~tplv-obj.image" style="width: 32px; object-fit: contain; margin-right: 4px;">
+  <span class="u3i1AgIX">汇乐石材</span> 加入了直播间
+</div>
+`;
+
 /** Captured from www.douyin.com feed player on 2026-08-28 */
 export const QUALITY_MENU_HTML = `
 <div class="xgplayer-playclarity-setting">

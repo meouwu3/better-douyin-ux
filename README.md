@@ -17,7 +17,7 @@
 3. **屏蔽关键字「伯哥」**  
    写死在 [`utils/keywords.ts`](utils/keywords.ts)，没有选项页。评论走 DOM 隐藏；弹幕是 `CanvasDanmakuPlugin`，在 MAIN world 拦截 `fillText` / `strokeText`。
 4. **去掉昵称前的徽章**  
-   等级、消费勋章、粉丝团等名字前面的元素一律隐藏。
+   等级、消费勋章、粉丝团等名字前面的元素一律隐藏，包括「加入了直播间」进房条和输入框上方的来了 / 点赞提示。
 
 ### 视频（非直播）
 
