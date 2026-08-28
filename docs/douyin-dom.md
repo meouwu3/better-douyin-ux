@@ -68,10 +68,10 @@
 
 1. `.account`：昵称 `[data-e2e="feed-video-nickname"]` + 时间
 2. `[data-e2e="video-desc"]`：正文和 `#标签`（`source=pc_click_hashtag_feed`）
-3. `video-desc` 后面的兄弟：汽水音乐（`sodaIcon.svg`）、相关搜索（`source=related_search_anchor_v2`）、合集（`.under-title-tag`）、识别画面
+3. `video-desc` 后第一个兄弟是花片行：合集（`.under-title-tag`，无 related-search 链接）、汽水音乐（`sodaIcon.svg`）、相关搜索（`.under-title-tag` 内 `source=related_search_anchor_v2`）、识别画面（同排其它 div）
 4. 再后面：`.safetyBar`「个人观点，仅供参考」
 
-扩展用 `[data-e2e="video-desc"] ~ div` 藏掉 3 和 4。
+扩展藏 汽水音乐 / 相关搜索 / 识别画面 / 个人观点，留下合集。
 
 ## 下载抖音精选
 

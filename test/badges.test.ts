@@ -62,17 +62,24 @@ describe('nickname badge CSS', () => {
     expect(tips.querySelector('a[href*="live.douyin.com"]')?.textContent).toContain('更多直播');
   });
 
-  it('hides caption chips and the disclaimer, keeps nickname and #hashtags', () => {
-    expect(css).toContain("[data-e2e='video-info'] [data-e2e='video-desc'] ~ div");
+  it('hides soda/related-search/识别画面/disclaimer, keeps 合集 and #hashtags', () => {
+    expect(css).toContain("img[src*='sodaIcon']");
+    expect(css).toContain('related_search_anchor');
+    expect(css).toContain('.under-title-tag');
+    expect(css).toContain('.safetyBar');
+    expect(css).not.toContain("[data-e2e='video-info'] [data-e2e='video-desc'] ~ div {");
     const info = mount(VIDEO_INFO_CHIPS_HTML);
     const desc = info.querySelector('[data-e2e="video-desc"]');
     const chips = desc?.nextElementSibling;
+    const mix = chips?.querySelector('.under-title-tag:not(:has(a[href*="related_search_anchor"]))');
+    const related = chips?.querySelector('.under-title-tag:has(a[href*="related_search_anchor"])');
+    const soda = chips?.querySelector('img[src*="sodaIcon"]')?.parentElement;
     const disclaimer = chips?.nextElementSibling;
     expect(info.querySelector('[data-e2e="feed-video-nickname"]')?.textContent).toContain('动物之星频道');
     expect(desc?.textContent).toContain('#湾鳄');
-    expect(chips?.textContent).toContain('合集：更多野生动物科普');
-    expect(chips?.textContent).toContain('汽水音乐');
-    expect(chips?.textContent).toContain('相关搜索');
+    expect(mix?.textContent).toContain('合集：更多野生动物科普');
+    expect(related?.textContent).toContain('相关搜索');
+    expect(soda?.textContent).toContain('汽水音乐');
     expect(chips?.textContent).toContain('识别画面');
     expect(disclaimer?.textContent).toContain('个人观点，仅供参考');
     expect(disclaimer?.querySelector('.safetyBar')).toBeTruthy();

@@ -227,8 +227,10 @@ export const VIDEO_INFO_CHIPS_HTML = `
         <img src="https://p3-luna.douyinpic.com/tos-cn-i-b829550vbb/sodaIcon.svg~tplv-b829550vbb-obj.image" alt="">
         <span>汽水音乐: 晴天（女声版）-Y.L</span>
       </div>
-      <a href="//www.douyin.com/search/%E7%BE%8E%E6%B4%B2%E8%99%8E?source=related_search_anchor_v2">相关搜索美洲虎</a>
-      <span>识别画面</span>
+      <div class="under-title-tag">
+        <a href="//www.douyin.com/search/%E7%BE%8E%E6%B4%B2%E8%99%8E?source=related_search_anchor_v2">相关搜索美洲虎</a>
+      </div>
+      <div><span>识别画面</span></div>
     </div>
     <div>
       <a class="safetyBar" href="undefined"><div>个人观点，仅供参考</div></a>
