@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import {
   AI_DOUYIN_ENTRY_HTML,
   BOTTOM_TICKER_HTML,
+  DOWNLOAD_JINGXUAN_HTML,
   GIFT_BAR_HTML,
   GIFT_SEND_HTML,
   JOIN_TOAST_HTML,
@@ -73,6 +74,16 @@ describe('nickname badge CSS', () => {
     expect(chips?.textContent).toContain('识别画面');
     expect(disclaimer?.textContent).toContain('个人观点，仅供参考');
     expect(disclaimer?.querySelector('.safetyBar')).toBeTruthy();
+  });
+
+  it('targets the left-rail 下载抖音精选 promo, not the 推荐 tab', () => {
+    expect(css).toContain("img[src*='jxWeakBtn']");
+    expect(css).toContain("[data-e2e='douyin-navigation']");
+    const nav = mount(DOWNLOAD_JINGXUAN_HTML);
+    expect(nav.getAttribute('data-e2e')).toBe('douyin-navigation');
+    expect(nav.querySelector('img[src*="jxWeakBtn"]')).toBeTruthy();
+    expect(nav.textContent).toContain('下载抖音精选');
+    expect(nav.textContent).toContain('推荐');
   });
 
   it('targets the avatar-top AI Douyin chip, not the left-nav AI抖音 tab', () => {

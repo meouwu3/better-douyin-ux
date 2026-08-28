@@ -69,6 +69,11 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+/* 左侧栏底部「下载抖音精选」推广条。img path is stable; hashed wrap class is not. */
+[data-e2e='douyin-navigation'] div:has(> div > img[src*='jxWeakBtn']) {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;

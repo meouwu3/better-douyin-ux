@@ -246,6 +246,23 @@ export const AI_DOUYIN_ENTRY_HTML = `
 </div>
 `;
 
+/** Left-rail 下载抖音精选 promo captured from www.douyin.com on 2026-08-28 */
+export const DOWNLOAD_JINGXUAN_HTML = `
+<div data-e2e="douyin-navigation">
+  <div>
+    <div class="QBGm3boE">
+      <a href="https://www.douyin.com/?recommend=1&from_nav=1">推荐</a>
+    </div>
+    <div class="koGT6lm7">
+      <div class="_OJbAD_I">
+        <img src="https://lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/jxWeakBtn" alt="">
+        <div>下载抖音精选</div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 export function mount(html: string): HTMLElement {
   const wrap = document.createElement('div');
   wrap.innerHTML = html.trim();
