@@ -263,6 +263,21 @@ export const DOWNLOAD_JINGXUAN_HTML = `
 </div>
 `;
 
+/** Right-column 听抖音 between share and more, captured 2026-08-28 */
+export const LISTEN_DOUYIN_HTML = `
+<div class="immersive-player-switch-on-hide-interaction-area">
+  <div>
+    <div>
+      <div data-e2e="video-player-share">2948</div>
+    </div>
+    <div>
+      <div>听抖音</div>
+    </div>
+    <div data-e2e="video-play-more"></div>
+  </div>
+</div>
+`;
+
 export function mount(html: string): HTMLElement {
   const wrap = document.createElement('div');
   wrap.innerHTML = html.trim();

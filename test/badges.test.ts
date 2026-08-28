@@ -7,6 +7,7 @@ import {
   GIFT_BAR_HTML,
   GIFT_SEND_HTML,
   JOIN_TOAST_HTML,
+  LISTEN_DOUYIN_HTML,
   MORE_LIVE_HTML,
   SCORE_BOOST_HTML,
   VIDEO_INFO_CHIPS_HTML,
@@ -74,6 +75,18 @@ describe('nickname badge CSS', () => {
     expect(chips?.textContent).toContain('识别画面');
     expect(disclaimer?.textContent).toContain('个人观点，仅供参考');
     expect(disclaimer?.querySelector('.safetyBar')).toBeTruthy();
+  });
+
+  it('targets 听抖音 after share, not the 更多 button', () => {
+    expect(css).toContain("[data-e2e='video-player-share']");
+    expect(css).toContain('.immersive-player-switch-on-hide-interaction-area');
+    const col = mount(LISTEN_DOUYIN_HTML);
+    const share = col.querySelector('[data-e2e="video-player-share"]');
+    const listen = share?.parentElement?.nextElementSibling;
+    const more = col.querySelector('[data-e2e="video-play-more"]');
+    expect(listen?.textContent).toContain('听抖音');
+    expect(more).toBeTruthy();
+    expect(more?.textContent).not.toContain('听抖音');
   });
 
   it('targets the left-rail 下载抖音精选 promo, not the 推荐 tab', () => {

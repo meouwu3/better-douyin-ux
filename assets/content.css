@@ -74,6 +74,13 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+/* 右侧互动栏「听抖音」：夹在分享和「更多」之间，没有 data-e2e */
+.immersive-player-switch-on-hide-interaction-area
+  :has(> [data-e2e='video-player-share'])
+  + div:not(:has([data-e2e])) {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;

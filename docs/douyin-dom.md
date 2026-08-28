@@ -77,6 +77,10 @@
 
 左侧导航 `[data-e2e="douyin-navigation"]` 底部推广条。装饰图 URL 含 `jxWeakBtn`。页脚里另有 `a[href*="/downloadpage/pc"]`「下载抖音」，不是这块。
 
+## 听抖音
+
+右侧互动栏 `.immersive-player-switch-on-hide-interaction-area` 里，`[data-e2e="video-player-share"]` 的父节点下一个兄弟，文案「听抖音」，没有 `data-e2e`。再下一个是 `[data-e2e="video-play-more"]`。
+
 ## 头像上方【AI抖音】入口
 
 入口在推荐信息流右侧互动栏、头像上方。稳定 class：`.ai-douyin-entry`。不要用左侧导航 `.tab-aisearch`。
