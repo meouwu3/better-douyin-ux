@@ -207,6 +207,36 @@ export const AI_ENTRY_SWITCH_OFF_HTML = `
 </div>
 `;
 
+/** Caption chips + disclaimer captured from www.douyin.com video-info on 2026-08-28 */
+export const VIDEO_INFO_CHIPS_HTML = `
+<div class="video-info-detail isVideoInfoOptimise" data-e2e="video-info" data-e2e-aweme-id="7677902734456048948">
+  <div>
+    <div class="account">
+      <div class="account-name" data-e2e="feed-video-nickname"><span>@动物之星频道</span></div>
+      <div class="video-create-time"><span class="time">· 3天前</span></div>
+    </div>
+    <div class="title cursorPointer" data-e2e="video-desc">
+      <span>第16集：湾鳄到底有多少不为人知的生存机制？</span>
+      <a href="//www.douyin.com/search/%E6%B9%BE%E9%B3%84?source=pc_click_hashtag_feed"><span>#湾鳄</span></a>
+    </div>
+    <div class="EhWDrrpM eq4w_mge">
+      <div class="under-title-tag">
+        <span>合集：更多野生动物科普</span>
+      </div>
+      <div>
+        <img src="https://p3-luna.douyinpic.com/tos-cn-i-b829550vbb/sodaIcon.svg~tplv-b829550vbb-obj.image" alt="">
+        <span>汽水音乐: 晴天（女声版）-Y.L</span>
+      </div>
+      <a href="//www.douyin.com/search/%E7%BE%8E%E6%B4%B2%E8%99%8E?source=related_search_anchor_v2">相关搜索美洲虎</a>
+      <span>识别画面</span>
+    </div>
+    <div>
+      <a class="safetyBar" href="undefined"><div>个人观点，仅供参考</div></a>
+    </div>
+  </div>
+</div>
+`;
+
 /** Right-column chip above the video avatar when the setting is on. */
 export const AI_DOUYIN_ENTRY_HTML = `
 <div class="" tabindex="0" style="position: relative;" data-popupid="9p9n2dw">

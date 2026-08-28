@@ -62,6 +62,17 @@
 
 信息流里可能同时存在当前条与预加载条两个 gear，优先 `[data-e2e="feed-active-video"]` 内的那个。
 
+## 标题下方花片
+
+`[data-e2e="video-info"]` 内顺序：
+
+1. `.account`：昵称 `[data-e2e="feed-video-nickname"]` + 时间
+2. `[data-e2e="video-desc"]`：正文和 `#标签`（`source=pc_click_hashtag_feed`）
+3. `video-desc` 后面的兄弟：汽水音乐（`sodaIcon.svg`）、相关搜索（`source=related_search_anchor_v2`）、合集（`.under-title-tag`）、识别画面
+4. 再后面：`.safetyBar`「个人观点，仅供参考」
+
+扩展用 `[data-e2e="video-desc"] ~ div` 藏掉 3 和 4。
+
 ## 头像上方【AI抖音】入口
 
 入口在推荐信息流右侧互动栏、头像上方。稳定 class：`.ai-douyin-entry`。不要用左侧导航 `.tab-aisearch`。

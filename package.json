@@ -2,7 +2,7 @@
   "name": "better-douyin-ux",
   "description": "改善抖音网页版体验：净化直播间送礼干扰、屏蔽指定评论，视频自动最高画质。",
   "private": false,
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@10.34.5",
