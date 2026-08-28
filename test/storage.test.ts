@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { rewriteDanmakuConfig, rewriteGiftPackageSetting } from '../utils/storage-patch';
+import { rewriteAiEntryClose, rewriteDanmakuConfig, rewriteGiftPackageSetting } from '../utils/storage-patch';
 
 describe('rewriteDanmakuConfig', () => {
   it('forces giftOn/packageOn off on the captured live.douyin.com value', () => {
@@ -27,6 +27,14 @@ describe('rewriteGiftPackageSetting', () => {
     expect(room?.expired).toBe(1787930842947);
     expect(room?.giftOn).toBe(false);
     expect(room?.packageOn).toBe(false);
+  });
+});
+
+describe('rewriteAiEntryClose', () => {
+  it('always writes 1 (入口关闭), including when Douyin tries 0', () => {
+    expect(rewriteAiEntryClose('0')).toBe('1');
+    expect(rewriteAiEntryClose('1')).toBe('1');
+    expect(rewriteAiEntryClose(null)).toBe('1');
   });
 });
 

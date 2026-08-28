@@ -1,4 +1,5 @@
 import '../assets/content.css';
+import { startAiEntryCloser } from '../utils/ai-entry';
 import { startChatFilter } from '../utils/chat';
 import { startLiveSettings } from '../utils/live-settings';
 import { startQualityWatcher } from '../utils/quality';
@@ -10,9 +11,11 @@ export default defineContentScript({
   main(ctx) {
     let stopLive: (() => void) | null = null;
     let stopVideo: (() => void) | null = null;
+    let stopAi: (() => void) | null = null;
     let liveHref: string | null = null;
 
     const boot = () => {
+      if (!stopAi) stopAi = startAiEntryCloser();
       const href = location.href;
       if (isLiveUrl(href)) {
         stopVideo?.();

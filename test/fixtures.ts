@@ -186,6 +186,36 @@ export const LIVE_TOGGLES_HTML = `
 </div>
 `;
 
+/** Captured from www.douyin.com AI设置 modal on 2026-08-28 */
+export const AI_ENTRY_SWITCH_ON_HTML = `
+<div class="bv8Wd9LA">
+  <span class="xiNSIYaC">头像上方【AI抖音】入口状态</span>
+  <div class="KpFqJEGU semi-switch semi-switch-checked semi-switch-large">
+    <div class="semi-switch-knob" aria-hidden="true"></div>
+    <input class="semi-switch-native-control" role="switch" aria-checked="true" aria-disabled="false" type="checkbox">
+  </div>
+</div>
+`;
+
+export const AI_ENTRY_SWITCH_OFF_HTML = `
+<div class="bv8Wd9LA">
+  <span class="xiNSIYaC">头像上方【AI抖音】入口状态</span>
+  <div class="KpFqJEGU semi-switch semi-switch-large">
+    <div class="semi-switch-knob" aria-hidden="true"></div>
+    <input class="semi-switch-native-control" role="switch" aria-checked="false" aria-disabled="false" type="checkbox">
+  </div>
+</div>
+`;
+
+/** Right-column chip above the video avatar when the setting is on. */
+export const AI_DOUYIN_ENTRY_HTML = `
+<div class="" tabindex="0" style="position: relative;" data-popupid="9p9n2dw">
+  <div class="G3RBOn14 ai-douyin-entry">
+    <div class="NIbN0HdY"><div class="MUe5EGsg"></div></div>
+  </div>
+</div>
+`;
+
 export function mount(html: string): HTMLElement {
   const wrap = document.createElement('div');
   wrap.innerHTML = html.trim();

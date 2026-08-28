@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.2.3 — 2026-08-28
+
+- 自动关闭头像上方【AI抖音】入口：MAIN world 把 `aiEntryClose` 写成 `1`，CSS 隐藏 `.ai-douyin-entry`；若 AI 设置弹层已打开则把开关拨到关
+
 ## 0.2.2 — 2026-08-28
 
 - 弹幕关键字：拦截 CanvasDanmakuPlugin Worker 的 `addBarrage`（OffscreenCanvas 上的 fillText 在 Worker 里，主线程钩不到）

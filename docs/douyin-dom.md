@@ -61,3 +61,13 @@
 ```
 
 信息流里可能同时存在当前条与预加载条两个 gear，优先 `[data-e2e="feed-active-video"]` 内的那个。
+
+## 头像上方【AI抖音】入口
+
+入口在推荐信息流右侧互动栏、头像上方。稳定 class：`.ai-douyin-entry`。不要用左侧导航 `.tab-aisearch`。
+
+设置弹层：顶栏 / 更多 → 设置 → AI设置。行文案 `头像上方【AI抖音】入口状态`，开关是 Semi Design `.semi-switch`（开：`semi-switch-checked` + `aria-checked="true"`）。
+
+localStorage（`www.douyin.com` 源）：
+
+- `aiEntryClose`：`"1"` 关闭入口，`"0"` 显示入口。点击开关会立刻改这个键。

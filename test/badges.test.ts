@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
+  AI_DOUYIN_ENTRY_HTML,
   BOTTOM_TICKER_HTML,
   GIFT_BAR_HTML,
   GIFT_SEND_HTML,
@@ -55,6 +56,14 @@ describe('nickname badge CSS', () => {
     const tips = mount(MORE_LIVE_HTML);
     expect(tips.id).toBe('TipsLayout');
     expect(tips.querySelector('a[href*="live.douyin.com"]')?.textContent).toContain('更多直播');
+  });
+
+  it('targets the avatar-top AI Douyin chip, not the left-nav AI抖音 tab', () => {
+    expect(css).toContain('.ai-douyin-entry');
+    expect(css).not.toContain('tab-aisearch');
+    const chip = mount(AI_DOUYIN_ENTRY_HTML);
+    expect(chip.querySelector('.ai-douyin-entry')).toBeTruthy();
+    expect(chip.getAttribute('data-popupid')).toBeTruthy();
   });
 
   it('hides gift-send and score-boost rows with content-based CSS, not JS markers', () => {

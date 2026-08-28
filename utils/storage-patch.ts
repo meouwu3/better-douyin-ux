@@ -1,3 +1,7 @@
+export const AI_ENTRY_CLOSE_KEY = 'aiEntryClose';
+/** Douyin stores "1" when 头像上方【AI抖音】入口 is closed, "0" when shown. */
+export const AI_ENTRY_CLOSED_VALUE = '1';
+
 export function rewriteDanmakuConfig(raw: string | null): string {
   let cfg: Record<string, unknown> = {};
   if (raw) {
@@ -10,6 +14,10 @@ export function rewriteDanmakuConfig(raw: string | null): string {
   cfg.giftOn = false;
   cfg.packageOn = false;
   return JSON.stringify(cfg);
+}
+
+export function rewriteAiEntryClose(_raw: string | null): string {
+  return AI_ENTRY_CLOSED_VALUE;
 }
 
 export function rewriteGiftPackageSetting(raw: string | null): string | null {
@@ -35,10 +43,11 @@ function patchedValue(key: string, value: string): string {
   if (key === 'DanmaSetting_GiftAndPackage') {
     return rewriteGiftPackageSetting(value) ?? value;
   }
+  if (key === AI_ENTRY_CLOSE_KEY) return rewriteAiEntryClose(value);
   return value;
 }
 
-/** MAIN-world only: wrap Storage so Douyin cannot persist gift-danmaku back on. */
+/** MAIN-world only: wrap Storage so Douyin cannot persist gift-danmaku or the AI entry back on. */
 export function installStoragePatch(): void {
   try {
     const current = localStorage.getItem('danmakuConfig');
@@ -46,6 +55,7 @@ export function installStoragePatch(): void {
     const giftPkg = localStorage.getItem('DanmaSetting_GiftAndPackage');
     const rewritten = rewriteGiftPackageSetting(giftPkg);
     if (rewritten != null) localStorage.setItem('DanmaSetting_GiftAndPackage', rewritten);
+    localStorage.setItem(AI_ENTRY_CLOSE_KEY, AI_ENTRY_CLOSED_VALUE);
   } catch {
     // private mode / disabled storage
   }

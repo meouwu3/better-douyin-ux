@@ -54,6 +54,12 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+/* 头像上方【AI抖音】入口 — class is stable, not a hash */
+.ai-douyin-entry,
+[data-popupid]:has(> .ai-douyin-entry) {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;
