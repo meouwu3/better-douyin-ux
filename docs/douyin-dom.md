@@ -81,6 +81,10 @@
 
 右侧互动栏 `.immersive-player-switch-on-hide-interaction-area` 里，`[data-e2e="video-player-share"]` 的父节点下一个兄弟，文案「听抖音」，没有 `data-e2e`。再下一个是 `[data-e2e="video-play-more"]`。
 
+## 大家都在搜
+
+评论侧栏 `.comment-header-with-search` 第一行。链接 `source=comment_related_search`。同一块里还有 `.comment-header-close-btn`；下面一行是「全部评论(n)」，再下面 `[data-e2e="comment-list"]`。只藏带搜索链接的那一格。
+
 ## 头像上方【AI抖音】入口
 
 入口在推荐信息流右侧互动栏、头像上方。稳定 class：`.ai-douyin-entry`。不要用左侧导航 `.tab-aisearch`。

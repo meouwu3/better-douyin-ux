@@ -4,6 +4,7 @@ import {
   AI_DOUYIN_ENTRY_HTML,
   BOTTOM_TICKER_HTML,
   DOWNLOAD_JINGXUAN_HTML,
+  EVERYONE_SEARCHING_HTML,
   GIFT_BAR_HTML,
   GIFT_SEND_HTML,
   JOIN_TOAST_HTML,
@@ -75,6 +76,17 @@ describe('nickname badge CSS', () => {
     expect(chips?.textContent).toContain('识别画面');
     expect(disclaimer?.textContent).toContain('个人观点，仅供参考');
     expect(disclaimer?.querySelector('.safetyBar')).toBeTruthy();
+  });
+
+  it('targets 大家都在搜 in the comment header, keeps 全部评论', () => {
+    expect(css).toContain('.comment-header-with-search');
+    expect(css).toContain("a[href*='comment_related_search']");
+    const header = mount(EVERYONE_SEARCHING_HTML);
+    const promo = header.querySelector('.comment-header-with-search > div:has(a[href*="comment_related_search"])');
+    expect(promo?.textContent).toContain('大家都在搜');
+    expect(promo?.querySelector('a')?.getAttribute('href')).toContain('comment_related_search');
+    expect(header.textContent).toContain('全部评论(17)');
+    expect(header.querySelector('.comment-header-close-btn')).toBeTruthy();
   });
 
   it('targets 听抖音 after share, not the 更多 button', () => {

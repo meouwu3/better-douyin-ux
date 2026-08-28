@@ -81,6 +81,11 @@ img[src*='fansclub_effect_badge'] {
   display: none !important;
 }
 
+/* 评论面板「大家都在搜」；留下 全部评论 和关闭按钮 */
+.comment-header-with-search > div:has(a[href*='comment_related_search']) {
+  display: none !important;
+}
+
 html[data-bdux-applying] [data-e2e='danmaku-setting-icon'] + div,
 html[data-bdux-applying] [data-e2e='gift-setting'] + div {
   opacity: 0 !important;

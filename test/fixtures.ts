@@ -278,6 +278,20 @@ export const LISTEN_DOUYIN_HTML = `
 </div>
 `;
 
+/** Comment panel 大家都在搜, captured from www.douyin.com on 2026-08-28 */
+export const EVERYONE_SEARCHING_HTML = `
+<div class="comment-header-inner-container">
+  <div class="comment-header-with-search">
+    <div>
+      <span>大家都在搜：</span>
+      <a href="//www.douyin.com/search/hi?aweme_id=1&source=comment_related_search">如果我们有隔阂了能不能发个hi</a>
+    </div>
+    <svg class="comment-header-close-btn"></svg>
+  </div>
+  <div><span>全部评论(17)</span></div>
+</div>
+`;
+
 export function mount(html: string): HTMLElement {
   const wrap = document.createElement('div');
   wrap.innerHTML = html.trim();
